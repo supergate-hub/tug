@@ -1,0 +1,30 @@
+# Tug Configuration Example
+
+# Address to listen on
+listenAddr: ":8080"
+
+# Slurmrestd connection settings
+slurmrestd:
+  # Base URL of slurmrestd
+  # Can be HTTP/HTTPS URL or unix socket path (e.g. unix:///var/run/slurm/slurmrestd.sock)
+  uri: "http://localhost:6820"
+
+  # Slurm API version (e.g. v0.0.40, v0.0.41)
+  version: "v0.0.40"
+
+  # JWT Authentication Mode: "auto" or "static"
+  # - auto: Generate tokens using a private key
+  # - static: Use a pre-generated token
+  jwtMode: "auto"
+
+  # Slurm User for token generation
+  jwtUser: "slurm"
+
+  # Token lifespan in seconds (for auto mode)
+  jwtLifespan: 360
+
+  # Path to private key file (for auto mode)
+  jwtKey: "/etc/slurm/jwt_hs256.key"
+
+  # Pre-generated token (for static mode)
+  # jwtToken: "eyJhbG..."

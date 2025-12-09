@@ -1,0 +1,17 @@
+[Unit]
+Description=Tug Daemon
+Documentation=https://github.com/supergate-hub/tug
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=tug
+Group=tug
+ExecStart=/usr/bin/tug --config /etc/tug/config.yaml
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
