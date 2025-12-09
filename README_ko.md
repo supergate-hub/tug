@@ -47,13 +47,13 @@ sudo mv tug /usr/local/bin/
 ## 빠른 시작
 
 1.  **설정 파일 생성**
-    
+
     `/etc/tug/config.yaml` 파일을 생성합니다. (디렉토리가 없다면 생성하세요)
 
     ```yaml
     # /etc/tug/config.yaml
     listenAddr: ":8080"
-    
+
     slurmrestd:
       uri: "http://localhost:6820"
       version: "v0.0.40"
@@ -63,14 +63,20 @@ sudo mv tug /usr/local/bin/
       jwtKey: "/etc/tug/jwt_hs256.key" # Slurm JWT 개인 키 경로
     ```
 
-2.  **JWT 키 설정**
+2.  **JWT 키 설정 (Auto 모드 필수)**
     
-    Slurm JWT 개인 키를 `/etc/tug/jwt_hs256.key`로 복사하고 권한을 설정합니다.
+    `jwtMode: "auto"`를 사용하는 경우 Slurm JWT 개인 키가 필요합니다.
+    키 파일을 안전한 위치로 복사하고, `tug` 사용자만 읽을 수 있도록 권한을 제한하세요.
 
     ```bash
-    sudo cp /path/to/slurm/jwt.key /etc/tug/jwt_hs256.key
+    # 키 파일 복사 (원본 경로는 Slurm 설정에 따라 다를 수 있음)
+    sudo cp /var/spool/slurm/statesave/jwt_hs256.key /etc/tug/jwt_hs256.key
+    
+    # 소유권을 tug 사용자로 변경
     sudo chown tug:tug /etc/tug/jwt_hs256.key
-    sudo chmod 600 /etc/tug/jwt_hs256.key
+    
+    # 권한 제한 (소유자만 읽기 가능)
+    sudo chmod 0400 /etc/tug/jwt_hs256.key
     ```
 
 3.  **서비스 시작**
@@ -106,4 +112,3 @@ curl -X POST http://localhost:8080/job/submit \
 ## 라이선스
 
 MIT License. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
-

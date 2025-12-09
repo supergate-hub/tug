@@ -47,13 +47,13 @@ sudo mv tug /usr/local/bin/
 ## Quick Start
 
 1.  **Create Configuration File**
-    
+
     Create `/etc/tug/config.yaml`. (Ensure the directory exists)
 
     ```yaml
     # /etc/tug/config.yaml
     listenAddr: ":8080"
-    
+
     slurmrestd:
       uri: "http://localhost:6820"
       version: "v0.0.40"
@@ -63,14 +63,20 @@ sudo mv tug /usr/local/bin/
       jwtKey: "/etc/tug/jwt_hs256.key" # Path to your Slurm JWT private key
     ```
 
-2.  **Setup JWT Key**
-    
-    Copy your Slurm JWT private key to `/etc/tug/jwt_hs256.key` and set permissions.
+2.  **Setup JWT Key (Auto Mode Only)**
+
+    If you are using `jwtMode: "auto"`, you must provide the Slurm JWT private key.
+    Copy the key to a secure location and restrict permissions so only the `tug` user can read it.
 
     ```bash
-    sudo cp /path/to/slurm/jwt.key /etc/tug/jwt_hs256.key
+    # Copy the key (source path may vary depending on your Slurm config)
+    sudo cp /var/spool/slurm/statesave/jwt_hs256.key /etc/tug/jwt_hs256.key
+
+    # Set ownership to tug user
     sudo chown tug:tug /etc/tug/jwt_hs256.key
-    sudo chmod 600 /etc/tug/jwt_hs256.key
+
+    # Restrict permissions (read-only for owner)
+    sudo chmod 0400 /etc/tug/jwt_hs256.key
     ```
 
 3.  **Start Service**
