@@ -1,0 +1,67 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+    # - go generate ./...
+
+builds:
+  - id: tug
+    main: ./cmd/tug
+    binary: tug
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+# Linux packages (deb, rpm) configuration
+nfpms:
+  - id: tug-pkg
+    package_name: tug
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    vendor: "Supergate"
+    homepage: "https://github.com/supergate-hub/tug"
+    maintainer: "Supergate <contact@supergate.cc>"
+    description: "Tug Slurm Daemon"
+    license: "MIT"
+    formats:
+      - deb
+      - rpm
+
+    # Systemd service and config files
+    contents:
+      - src: ./scripts/tug.service
+        dst: /lib/systemd/system/tug.service
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
