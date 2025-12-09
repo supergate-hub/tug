@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/supergate-hub/tug/internal/config"
-	"github.com/supergate-hub/tug/server"
+	"github.com/supergate-hub/tug/internal/server"
 )
 
 var (
