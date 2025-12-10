@@ -64,17 +64,17 @@ sudo mv tug /usr/local/bin/
     ```
 
 2.  **JWT 키 설정 (Auto 모드 필수)**
-    
+
     `jwtMode: "auto"`를 사용하는 경우 Slurm JWT 개인 키가 필요합니다.
     키 파일을 안전한 위치로 복사하고, `tug` 사용자만 읽을 수 있도록 권한을 제한하세요.
 
     ```bash
     # 키 파일 복사 (원본 경로는 Slurm 설정에 따라 다를 수 있음)
     sudo cp /var/spool/slurm/statesave/jwt_hs256.key /etc/tug/jwt_hs256.key
-    
+
     # 소유권을 tug 사용자로 변경
     sudo chown tug:tug /etc/tug/jwt_hs256.key
-    
+
     # 권한 제한 (소유자만 읽기 가능)
     sudo chmod 0400 /etc/tug/jwt_hs256.key
     ```
@@ -111,4 +111,4 @@ curl -X POST http://localhost:8080/job/submit \
 
 ## 라이선스
 
-MIT License. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.

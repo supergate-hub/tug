@@ -111,4 +111,4 @@ Contributions are welcome! Please submit a Pull Request.
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+See [LICENSE](LICENSE) for details.
