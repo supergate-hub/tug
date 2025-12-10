@@ -105,6 +105,12 @@ curl -X POST http://localhost:8080/job/submit \
   }'
 ```
 
+## 제한 사항 (Limitations)
+
+- **지원 Slurm REST API 버전**: 현재 `v0.0.40` 버전만 지원됩니다.
+  - 이 제한은 의존하는 [`slurm-client`](https://github.com/supergate-hub/slurm-client) SDK가 현재 `v0.0.40`만 구현하고 있기 때문입니다.
+  - 추가 버전(예: `v0.0.41`, `v0.0.42`) 지원은 향후 릴리스에서 계획 중입니다.
+
 ## 기여하기
 
 기여는 언제나 환영합니다! Pull Request를 보내주세요.
